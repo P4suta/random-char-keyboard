@@ -1,0 +1,23 @@
+# Rust
+/crate/target/
+
+# Node / Vite
+/frontend/node_modules/
+/frontend/dist/
+
+# Generated wasm package (rebuilt by `pnpm run wasm` and in CI)
+/frontend/src/wasm/
+
+# Font pipeline: large downloaded sources, venv, and Rust planner build output.
+# The committed outputs (frontend/src/fonts/gen/, crate/src/coverage.rs,
+# tools/plan.json, tools/coverage.json) are what CI verifies and the site serves.
+/tools/sources/
+/tools/.venv/
+/tools/planner/target/
+
+# misc
+.DS_Store
+
+## Panda
+styled-system
+styled-system-studio

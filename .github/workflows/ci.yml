@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust + wasm32 target
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup target add wasm32-unknown-unknown
+
+      - name: Host tests
+        run: cargo test
+        working-directory: crate
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: 'latest'
+
+      - name: Wasm tests
+        run: wasm-pack test --node
+        working-directory: crate
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Check (Biome)
+        run: pnpm run check
+
+      - name: Test (vitest)
+        run: pnpm test
+
+  fonts-verify:
+    # The no-tofu pre-check: re-reads the committed woff2 chunks and proves
+    # their union equals COVERED_RANGES (so every character the sampler can emit
+    # is guaranteed to render). See tools/verify_fonts.py.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Verify font coverage (no tofu)
+        run: |
+          uv venv .venv
+          uv pip install --python .venv/bin/python fonttools brotli
+          .venv/bin/python tools/verify_fonts.py

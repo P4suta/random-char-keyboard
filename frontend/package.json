@@ -1,0 +1,35 @@
+{
+  "name": "random-char-keyboard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.3.0",
+  "scripts": {
+    "prepare": "panda codegen --silent",
+    "codegen": "panda codegen",
+    "wasm": "wasm-pack build ../crate --target web --out-dir ../frontend/src/wasm --out-name keyboard",
+    "dev": "pnpm run codegen && pnpm run wasm && vite",
+    "build": "pnpm run codegen && pnpm run wasm && vite build",
+    "preview": "vite preview",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "test": "pnpm run codegen && vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "solid-js": "^1.9.13"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "@pandacss/dev": "^1.11.1",
+    "@solidjs/testing-library": "^0.8.10",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "jsdom": "^29.1.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vite-plugin-solid": "^2.11.12",
+    "vitest": "^4.1.7"
+  }
+}

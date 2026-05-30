@@ -1,0 +1,16 @@
+[package]
+name = "planner"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "planner"
+path = "src/main.rs"
+
+[dependencies]
+ttf-parser = "0.25"
+unicode-general-category = "1"
+
+[profile.release]
+opt-level = 3

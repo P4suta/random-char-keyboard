@@ -1,0 +1,5 @@
+# Approve esbuild's postinstall build (pulled in by Panda/Vite/Vitest) so
+# `pnpm install` exits 0 and `pnpm run <script>` works. pnpm 11 reads this here,
+# not from package.json.
+allowBuilds:
+  esbuild: true
