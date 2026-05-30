@@ -1,5 +1,7 @@
 # random-char-keyboard
 
+**🔴 Live: https://p4suta.github.io/random-char-keyboard/**
+
 ボタンを押すとランダムな **印字可能 Unicode 文字** を 1 文字出力する「1 キーキーボード」。
 コア(ランダム抽出 + 印字可能判定)は **Rust → WebAssembly**、UI は **Solid + Vite + TypeScript**。
 **同梱フォントが描画できる文字しか出さない**ので、出力が □(豆腐)になることはありません。
